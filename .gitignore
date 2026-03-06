@@ -1,11 +1,7 @@
 # Java files
 *.class
 *.jar
-# Log files
-*.log
-# OS generated files
-.DS_Store
-Thumbs.db
+
 # VS Code settings
 .vscode/
 # Maven target directory
