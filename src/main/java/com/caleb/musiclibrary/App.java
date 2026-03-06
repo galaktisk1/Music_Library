@@ -13,7 +13,7 @@ import com.caleb.musiclibrary.scan.FileWalker;
  */
 public class App {
     public static void main(String[] args) {
-        Path root = Paths.get("D:\\! Ripped Music");
+        Path root = Paths.get("E:\\! Ripped Music");
         FileWalker walker = new FileWalker();
 
         try {

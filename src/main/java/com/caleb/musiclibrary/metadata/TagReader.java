@@ -36,12 +36,15 @@ public class TagReader {
         return tags;
     }
 
+
+    // helper to safely read a tag field with a fallback if the tag or field is missing/empty
     private String read(Tag tag, FieldKey key, String fallback) {
         if (tag == null) return fallback;
         String value = tag.getFirst(key);
         return (value == null || value.isBlank()) ? fallback : value.trim();
     }
 
+    // this is a strip extension fallback for title when no tags are present, so we can at least have a name to work with
     private String stripExtension(String name) {
         int dot = name.lastIndexOf('.');
         return dot > 0 ? name.substring(0, dot) : name;

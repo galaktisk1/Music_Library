@@ -10,4 +10,5 @@ Instead of storing books, I am building a Java Music Library Indexer that scans 
 This project is inspired by the same core idea as the book-tracking application, but adapted to handle a large real-world dataset. I recently ripped hundreds of CDs from my personal collection into a structured folder system, and I want a program that can automatically organize and analyze the collection.
 
 # Notes
-Could use SQLLite, or just write a flat .txt or .csv file to draw from
+The music library on my USB drive is the dataset/source of truth for this project.
+This project reads metadata directly from those files; it does not use SQLite, CSV, JSON, or TXT storage.
