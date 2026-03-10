@@ -1,23 +1,19 @@
 package com.caleb.musiclibrary.scan;
 
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Traverses the filesystem to discover supported audio files.
  */
 
 public class FileWalker {
-    public List<Path> findAudioFiles(Path root) throws IOException {
-        try (Stream<Path> stream = Files.walk(root)) {
-            return stream
-                .filter(Files::isRegularFile)
-                .filter(this::isAudioFile)
-                .toList();
-        }
+    public List<Path> findAudioFiles(Path root) {
+        List<Path> audioFiles = new ArrayList<>();
+        collectAudioFiles(root.toFile(), audioFiles);
+        return audioFiles;
     }
 
     private boolean isAudioFile(Path p) {
@@ -25,4 +21,18 @@ public class FileWalker {
         return name.endsWith(".mp3") || name.endsWith(".flac") || name.endsWith(".m4a") || name.endsWith(".wav");
     }
 
+    private void collectAudioFiles(File current, List<Path> audioFiles) {
+        File[] files = current.listFiles();
+        if (files == null) {
+            return;
+        }
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                collectAudioFiles(file, audioFiles);
+            } else if (isAudioFile(file.toPath())) {
+                audioFiles.add(file.toPath());
+            }
+        }
+    }
 }

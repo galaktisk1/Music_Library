@@ -11,27 +11,18 @@ import org.jaudiotagger.tag.Tag;
 
 public class TagReader {
 
-    public Map<String, String> readTags(Path file) {
+    public Map<String, String> readTags(Path file) throws Exception {
         Map<String, String> tags = new HashMap<>();
         tags.put("filePath", file.toString());
 
-        try {
-            AudioFile audio = AudioFileIO.read(file.toFile());
-            Tag tag = audio.getTag();
+        AudioFile audio = AudioFileIO.read(file.toFile());
+        Tag tag = audio.getTag();
 
-            tags.put("title", read(tag, FieldKey.TITLE, stripExtension(file.getFileName().toString())));
-            tags.put("artist", read(tag, FieldKey.ARTIST, "Unknown Artist"));
-            tags.put("album", read(tag, FieldKey.ALBUM, "Unknown Album"));
-            tags.put("year", read(tag, FieldKey.YEAR, ""));
-            tags.put("trackNumber", read(tag, FieldKey.TRACK, ""));
-        } catch (Exception e) {
-            // fallback so one bad file does not kill the scan
-            tags.put("title", stripExtension(file.getFileName().toString()));
-            tags.put("artist", "Unknown Artist");
-            tags.put("album", "Unknown Album");
-            tags.put("year", "");
-            tags.put("trackNumber", "");
-        }
+        tags.put("title", read(tag, FieldKey.TITLE, stripExtension(file.getFileName().toString())));
+        tags.put("artist", read(tag, FieldKey.ARTIST, "Unknown Artist"));
+        tags.put("album", read(tag, FieldKey.ALBUM, "Unknown Album"));
+        tags.put("year", read(tag, FieldKey.YEAR, ""));
+        tags.put("trackNumber", read(tag, FieldKey.TRACK, ""));
 
         return tags;
     }

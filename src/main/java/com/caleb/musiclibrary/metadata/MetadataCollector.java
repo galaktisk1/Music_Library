@@ -6,7 +6,9 @@ package com.caleb.musiclibrary.metadata;
 
 import java.nio.file.Path;
 import java.util.Map;
+
 import com.caleb.musiclibrary.model.LibraryRecord;
+
 public class MetadataCollector {
     private TagReader tagReader;
 
@@ -14,7 +16,7 @@ public class MetadataCollector {
         this.tagReader = new TagReader();
     }
 
-    public LibraryRecord collect(Path file) {
+    public LibraryRecord collect(Path file) throws Exception {
         Map<String, String> tags = tagReader.readTags(file);
         LibraryRecord record = new LibraryRecord();
         record.setFilePath(tags.get("filePath"));
@@ -27,10 +29,9 @@ public class MetadataCollector {
     }
 
     private Integer parseInt(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
+        if (value == null || value.isBlank() || !value.matches("\\d+")) {
             return null;
         }
+        return Integer.parseInt(value);
     }
 }
