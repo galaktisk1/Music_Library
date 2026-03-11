@@ -6,3 +6,7 @@
 .vscode/
 # Maven target directory
 target/
+# out directory for compiled classes
+out/
+# old stuff
+old_stuff/
