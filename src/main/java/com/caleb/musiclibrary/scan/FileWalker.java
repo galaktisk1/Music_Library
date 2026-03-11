@@ -18,7 +18,7 @@ public class FileWalker {
 
     private boolean isAudioFile(Path p) {
         String name = p.getFileName().toString().toLowerCase();
-        return name.endsWith(".mp3") || name.endsWith(".flac") || name.endsWith(".m4a") || name.endsWith(".wav");
+        return name.endsWith(".mp3");
     }
 
     private void collectAudioFiles(File current, List<Path> audioFiles) {

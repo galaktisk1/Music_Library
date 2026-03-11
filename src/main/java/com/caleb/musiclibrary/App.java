@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import com.caleb.musiclibrary.scan.FileWalker;
 import com.caleb.musiclibrary.util.ConsolePrinter;
-import com.caleb.musiclibrary.util.PathUtils;
 
 /**
  * Entry point for the Music Library application and top-level workflow orchestration.
@@ -22,7 +22,7 @@ public class App {
     private static final Path ROOT = Files.isDirectory(Paths.get("E:\\! Ripped Music")) ? Paths.get("E:\\! Ripped Music") : Paths.get("D:\\! Ripped Music");
 
     private final ConsolePrinter printer = new ConsolePrinter();
-    private final PathUtils pathUtils = new PathUtils();
+    private final FileWalker fileWalker = new FileWalker();
 
     public static void main(String[] args) {
         new App().run();
@@ -139,14 +139,11 @@ public class App {
     }
 
     private List<Path> listTracks(Path albumFolder) {
-        File[] files = albumFolder.toFile().listFiles(File::isFile);
-        if (files == null) {
+        if (!Files.isDirectory(albumFolder)) {
             return Collections.emptyList();
         }
 
-        return Arrays.stream(files)
-            .map(File::toPath)
-            .filter(pathUtils::isAudioFile)
+        return fileWalker.findAudioFiles(albumFolder).stream()
             .sorted(Comparator.comparing(path -> path.getFileName().toString().toLowerCase()))
             .collect(Collectors.toList());
     }
