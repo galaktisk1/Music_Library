@@ -38,6 +38,8 @@ public class LibraryController {
     }
 
     public List<LibraryRecord> searchByTitle(String title) {
+        // Track title searches are intended to lead the UI to the containing
+        // album, where the matching track can be highlighted in the track list.
         return searchService.searchByTitle(title);
     }
 

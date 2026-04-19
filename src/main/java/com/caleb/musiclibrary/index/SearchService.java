@@ -19,6 +19,8 @@ public class SearchService {
     }
 
     public List<LibraryRecord> searchByTitle(String title) {
+        // Returns matching track records. The UI can group these by album and
+        // highlight the searched-for track inside the matching album view.
         return index.findByTitle(title);
     }
 

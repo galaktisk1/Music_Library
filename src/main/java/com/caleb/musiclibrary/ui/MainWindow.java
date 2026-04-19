@@ -23,14 +23,19 @@ public class MainWindow {
 
     public void showSearchScreen() {
         // The search screen will collect title, artist, or album search input.
+        // When the user searches for a track, the result should open the album
+        // that contains it instead of showing the track by itself.
     }
 
     public void showResultsScreen() {
-        // The results screen will display matching LibraryRecord rows.
+        // The results screen will show matching albums or tracks.
+        // If a track match is selected, the album track list should be shown
+        // with the searched-for track highlighted in that album context.
     }
 
     public void showTrackDetails(LibraryRecord record) {
-        // The detail screen will display one selected track record.
+        // The detail screen will display one selected track record after the
+        // user views it from the highlighted album track list.
     }
 
     public LibraryController getController() {
