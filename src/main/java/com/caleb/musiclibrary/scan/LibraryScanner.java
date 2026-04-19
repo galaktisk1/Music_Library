@@ -1,7 +1,7 @@
 package com.caleb.musiclibrary.scan;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.caleb.musiclibrary.metadata.MetadataCollector;
@@ -24,16 +24,8 @@ public class LibraryScanner {
     }
 
     public List<LibraryRecord> scan(Path rootFolder) {
-        List<LibraryRecord> records = new ArrayList<>();
-
-        for (Path file : fileWalker.findAudioFiles(rootFolder)) {
-            try {
-                records.add(metadataCollector.collect(file));
-            } catch (Exception e) {
-                // Skip files with unreadable or unsupported metadata for now.
-            }
-        }
-
-        return records;
+        // TODO: Use FileWalker to find audio files, then use MetadataCollector
+        // to turn each file into a LibraryRecord.
+        return Collections.emptyList();
     }
 }

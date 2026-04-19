@@ -32,38 +32,33 @@ public class LibraryController {
     }
 
     public List<LibraryRecord> scanFolder(Path folder) {
-        List<LibraryRecord> records = scanner.scan(folder);
-        searchService.addRecords(records);
-        return records;
+        // TODO: Scan the folder, update the search index, and return records
+        // for the UI results screen.
+        return Collections.emptyList();
     }
 
     public List<LibraryRecord> searchByTitle(String title) {
-        // Track title searches are intended to lead the UI to the containing
+        // TODO: Track title searches should lead the UI to the containing
         // album, where the matching track can be highlighted in the track list.
-        return searchService.searchByTitle(title);
+        return Collections.emptyList();
     }
 
     public List<LibraryRecord> searchByArtist(String artist) {
-        return searchService.searchByArtist(artist);
+        // TODO: Search for records by artist.
+        return Collections.emptyList();
     }
 
     public List<LibraryRecord> searchByAlbum(String album) {
-        return searchService.searchByAlbum(album);
+        // TODO: Search for records by album.
+        return Collections.emptyList();
     }
 
     public void saveLibrary(List<LibraryRecord> records) {
-        if (repository != null) {
-            repository.save(records);
-        }
+        // TODO: Save library records through the repository.
     }
 
     public List<LibraryRecord> loadLibrary() {
-        if (repository == null) {
-            return Collections.emptyList();
-        }
-
-        List<LibraryRecord> records = repository.load();
-        searchService.addRecords(records);
-        return records;
+        // TODO: Load library records through the repository.
+        return Collections.emptyList();
     }
 }

@@ -1,5 +1,6 @@
 package com.caleb.musiclibrary.index;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.caleb.musiclibrary.model.LibraryRecord;
@@ -15,20 +16,22 @@ public class SearchService {
     }
 
     public void addRecords(List<LibraryRecord> records) {
-        index.addRecords(records);
+        // TODO: Add scanned records to the searchable library index.
     }
 
     public List<LibraryRecord> searchByTitle(String title) {
-        // Returns matching track records. The UI can group these by album and
-        // highlight the searched-for track inside the matching album view.
-        return index.findByTitle(title);
+        // TODO: Return matching track records. The UI should group these by
+        // album and highlight the searched-for track inside the album view.
+        return Collections.emptyList();
     }
 
     public List<LibraryRecord> searchByArtist(String artist) {
-        return index.findByArtist(artist);
+        // TODO: Return matching artist records.
+        return Collections.emptyList();
     }
 
     public List<LibraryRecord> searchByAlbum(String album) {
-        return index.findByAlbum(album);
+        // TODO: Return matching album records.
+        return Collections.emptyList();
     }
 }
