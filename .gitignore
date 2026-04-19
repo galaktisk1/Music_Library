@@ -13,3 +13,4 @@ old_stuff/
 old_stuff/cd_database.db
 old_stuff/cd_database.py
 old_stuff/database_query.py
+.fake

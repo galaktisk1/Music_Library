@@ -56,7 +56,7 @@ public class App {
                     if (albumFolder == null) {
                         break;
                     }
-
+                    
                     showAlbumTracks(albumFolder, scanner);
                 }
             }
