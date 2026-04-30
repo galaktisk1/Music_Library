@@ -1,39 +1,86 @@
 package com.caleb.musiclibrary.index;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.caleb.musiclibrary.model.LibraryRecord;
 
 /**
- * Maintains in-memory structures for fast lookup of library records.
+ * Stores library records in memory and supports simple search methods.
  */
 public class LibraryIndex {
+    private final List<LibraryRecord> records = new ArrayList<>();
+
     public void addRecord(LibraryRecord record) {
-        // TODO: Store one library record in the index.
+        if (record != null) {
+            records.add(record);
+        }
     }
 
     public void addRecords(List<LibraryRecord> records) {
-        // TODO: Store multiple library records in the index.
+        if (records == null) {
+            return;
+        }
+
+        this.records.addAll(records);
     }
 
     public List<LibraryRecord> getAllRecords() {
-        // TODO: Return all indexed records.
-        return Collections.emptyList();
+        return records;
+    }
+
+    public void clear() {
+        records.clear();
     }
 
     public List<LibraryRecord> findByTitle(String title) {
-        // TODO: Search indexed records by track title.
-        return Collections.emptyList();
+        List<LibraryRecord> matches = new ArrayList<>();
+        if (title == null || title.isBlank()) {
+            return matches;
+        }
+
+        String searchText = title.toLowerCase();
+        for (LibraryRecord record : records) {
+            String recordTitle = record.getTitle();
+            if (recordTitle != null && recordTitle.toLowerCase().contains(searchText)) {
+                matches.add(record);
+            }
+        }
+
+        return matches;
     }
 
     public List<LibraryRecord> findByArtist(String artist) {
-        // TODO: Search indexed records by artist.
-        return Collections.emptyList();
+        List<LibraryRecord> matches = new ArrayList<>();
+        if (artist == null || artist.isBlank()) {
+            return matches;
+        }
+
+        String searchText = artist.toLowerCase();
+        for (LibraryRecord record : records) {
+            String recordArtist = record.getArtist();
+            if (recordArtist != null && recordArtist.toLowerCase().contains(searchText)) {
+                matches.add(record);
+            }
+        }
+
+        return matches;
     }
 
     public List<LibraryRecord> findByAlbum(String album) {
-        // TODO: Search indexed records by album.
-        return Collections.emptyList();
+        List<LibraryRecord> matches = new ArrayList<>();
+        if (album == null || album.isBlank()) {
+            return matches;
+        }
+
+        String searchText = album.toLowerCase();
+        for (LibraryRecord record : records) {
+            String recordAlbum = record.getAlbum();
+            if (recordAlbum != null && recordAlbum.toLowerCase().contains(searchText)) {
+                matches.add(record);
+            }
+        }
+
+        return matches;
     }
 }

@@ -16,22 +16,32 @@ public class SearchService {
     }
 
     public void addRecords(List<LibraryRecord> records) {
-        // TODO: Add scanned records to the searchable library index.
+        index.addRecords(records);
+    }
+
+    public void replaceRecords(List<LibraryRecord> records) {
+        index.clear();
+        index.addRecords(records);
     }
 
     public List<LibraryRecord> searchByTitle(String title) {
-        // TODO: Return matching track records. The UI should group these by
-        // album and highlight the searched-for track inside the album view.
-        return Collections.emptyList();
+        return index.findByTitle(title);
     }
 
     public List<LibraryRecord> searchByArtist(String artist) {
-        // TODO: Return matching artist records.
-        return Collections.emptyList();
+        return index.findByArtist(artist);
     }
 
     public List<LibraryRecord> searchByAlbum(String album) {
-        // TODO: Return matching album records.
-        return Collections.emptyList();
+        return index.findByAlbum(album);
+    }
+
+    public List<LibraryRecord> getAllRecords() {
+        List<LibraryRecord> records = index.getAllRecords();
+        if (records == null) {
+            return Collections.emptyList();
+        }
+
+        return records;
     }
 }

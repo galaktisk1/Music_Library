@@ -16,6 +16,12 @@ public class FileWalker {
         return audioFiles;
     }
 
+    public List<Path> findAlbumFolders(Path root) {
+        List<Path> albumFolders = new ArrayList<>();
+        collectAlbumFolders(root.toFile(), albumFolders);
+        return albumFolders;
+    }
+
     private boolean isAudioFile(Path p) {
         String name = p.getFileName().toString().toLowerCase();
         return name.endsWith(".mp3");
@@ -32,6 +38,32 @@ public class FileWalker {
                 collectAudioFiles(file, audioFiles);
             } else if (isAudioFile(file.toPath())) {
                 audioFiles.add(file.toPath());
+            }
+        }
+    }
+
+    private void collectAlbumFolders(File current, List<Path> albumFolders) {
+        File[] files = current.listFiles();
+        if (files == null) {
+            return;
+        }
+
+        boolean containsAudio = false;
+        for (File file : files) {
+            if (file.isFile() && isAudioFile(file.toPath())) {
+                containsAudio = true;
+                break;
+            }
+        }
+
+        if (containsAudio) {
+            albumFolders.add(current.toPath());
+            return;
+        }
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                collectAlbumFolders(file, albumFolders);
             }
         }
     }

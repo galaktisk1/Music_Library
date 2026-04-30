@@ -1,13 +1,14 @@
 package com.caleb.musiclibrary.controller;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.caleb.musiclibrary.index.SearchService;
+import com.caleb.musiclibrary.model.Album;
 import com.caleb.musiclibrary.model.LibraryRecord;
 import com.caleb.musiclibrary.scan.LibraryScanner;
-import com.caleb.musiclibrary.storage.LibraryRepository;
 
 /**
  * Coordinates user actions between the UI and the library services.
@@ -15,50 +16,104 @@ import com.caleb.musiclibrary.storage.LibraryRepository;
 public class LibraryController {
     private final LibraryScanner scanner;
     private final SearchService searchService;
-    private final LibraryRepository repository;
+    private final List<Album> albums = new ArrayList<>();
 
     public LibraryController(LibraryScanner scanner, SearchService searchService) {
-        this(scanner, searchService, null);
-    }
-
-    public LibraryController(
-        LibraryScanner scanner,
-        SearchService searchService,
-        LibraryRepository repository
-    ) {
         this.scanner = scanner;
         this.searchService = searchService;
-        this.repository = repository;
     }
 
-    public List<LibraryRecord> scanFolder(Path folder) {
-        // TODO: Scan the folder, update the search index, and return records
-        // for the UI results screen.
-        return Collections.emptyList();
+    public List<Album> scanFolder(Path folder) {
+        List<Album> scannedAlbums = scanner.scanAlbums(folder);
+        albums.clear();
+        albums.addAll(scannedAlbums);
+        return scannedAlbums;
     }
 
     public List<LibraryRecord> searchByTitle(String title) {
-        // TODO: Track title searches should lead the UI to the containing
-        // album, where the matching track can be highlighted in the track list.
-        return Collections.emptyList();
+        return searchService.searchByTitle(title);
     }
 
     public List<LibraryRecord> searchByArtist(String artist) {
-        // TODO: Search for records by artist.
-        return Collections.emptyList();
+        return searchService.searchByArtist(artist);
     }
 
     public List<LibraryRecord> searchByAlbum(String album) {
-        // TODO: Search for records by album.
-        return Collections.emptyList();
+        return searchService.searchByAlbum(album);
     }
 
-    public void saveLibrary(List<LibraryRecord> records) {
-        // TODO: Save library records through the repository.
+    public void addRecords(List<LibraryRecord> records) {
+        searchService.addRecords(records);
     }
 
-    public List<LibraryRecord> loadLibrary() {
-        // TODO: Load library records through the repository.
-        return Collections.emptyList();
+    public List<LibraryRecord> getAllRecords() {
+        return searchService.getAllRecords();
+    }
+
+    public List<Album> getAlbums() {
+        return new ArrayList<>(albums);
+    }
+
+    public List<Album> searchAlbumsByArtist(String artist) {
+        List<Album> matches = new ArrayList<>();
+        if (artist == null || artist.isBlank()) {
+            return matches;
+        }
+
+        String searchText = artist.toLowerCase();
+        for (Album album : albums) {
+            String albumArtist = album.getArtist();
+            if (albumArtist != null && albumArtist.toLowerCase().contains(searchText)) {
+                matches.add(album);
+            }
+        }
+
+        return matches;
+    }
+
+    public List<Album> searchAlbumsByTitle(String title) {
+        List<Album> matches = new ArrayList<>();
+        if (title == null || title.isBlank()) {
+            return matches;
+        }
+
+        String searchText = title.toLowerCase();
+        for (Album album : albums) {
+            String albumTitle = album.getTitle();
+            if (albumTitle != null && albumTitle.toLowerCase().contains(searchText)) {
+                matches.add(album);
+            }
+        }
+
+        return matches;
+    }
+
+    public List<Album> searchAlbumsByTrack(String trackTitle) {
+        List<Album> matches = new ArrayList<>();
+        if (trackTitle == null || trackTitle.isBlank()) {
+            return matches;
+        }
+
+        String searchText = trackTitle.toLowerCase();
+        for (Album album : albums) {
+            List<LibraryRecord> tracks = scanner.scanAlbumTracks(album.getFolderPath());
+            for (LibraryRecord track : tracks) {
+                String title = track.getTitle();
+                if (title != null && title.toLowerCase().contains(searchText)) {
+                    matches.add(album);
+                    break;
+                }
+            }
+        }
+
+        return matches;
+    }
+
+    public List<LibraryRecord> getTracksForAlbum(Album album) {
+        if (album == null || album.getFolderPath() == null) {
+            return Collections.emptyList();
+        }
+
+        return scanner.scanAlbumTracks(album.getFolderPath());
     }
 }
