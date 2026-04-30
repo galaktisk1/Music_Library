@@ -128,7 +128,7 @@ public class MetadataCollector {
         }
 
         String discNumber = matcher.group(1);
-        String extraText = matcher.group(2) == null ? "" : matcher.group(2).trim();
+        String extraText = matcher.group(2) == null ? "" : normalizeDiscExtraText(matcher.group(2));
         String discText = "Disc " + discNumber;
 
         if (extraText.isBlank()) {
@@ -140,6 +140,17 @@ public class MetadataCollector {
         }
 
         return discText + " - " + extraText;
+    }
+
+    private String normalizeDiscExtraText(String extraText) {
+        if (extraText == null) {
+            return "";
+        }
+        // I had a very specific case where the disc folders were named like "Disc 1 - Album Name", 
+        // so this just tries to clean that up if it happens.
+        String cleaned = extraText.trim();
+        cleaned = cleaned.replaceFirst("^[-:]+\\s*", "");
+        return cleaned.trim();
     }
 
     private String findRootAlbumTitle(Path albumFolder) {

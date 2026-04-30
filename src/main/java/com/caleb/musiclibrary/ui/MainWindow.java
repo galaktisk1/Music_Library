@@ -152,7 +152,7 @@ public class MainWindow {
 
         searchField.clear();
         activeTrackSearch = null;
-        updateAlbumList(scannedAlbums, "Loaded albums from: " + folderPath);
+        updateAlbumList(scannedAlbums);
     }
 
     private void runSearch() {
@@ -173,24 +173,24 @@ public class MainWindow {
         if ("Artist".equalsIgnoreCase(searchType)) {
             activeTrackSearch = null;
             results = controller.searchAlbumsByArtist(query);
-            updateAlbumList(results, "Artist search: " + query);
+            updateAlbumList(results);
         } else if ("Track".equalsIgnoreCase(searchType)) {
             activeTrackSearch = query;
             results = controller.searchAlbumsByTrack(query);
-            updateAlbumList(results, "Track search: " + query);
+            updateAlbumList(results);
         } else {
             activeTrackSearch = null;
             results = controller.searchAlbumsByTitle(query);
-            updateAlbumList(results, "Album search: " + query);
+            updateAlbumList(results);
         }
     }
 
     private void showAllAlbums() {
         activeTrackSearch = null;
-        updateAlbumList(controller.getAlbums(), "Showing all albums");
+        updateAlbumList(controller.getAlbums());
     }
 
-    private void updateAlbumList(List<Album> albums, String statusText) {
+    private void updateAlbumList(List<Album> albums) {
         currentAlbums = albums == null ? new ArrayList<>() : new ArrayList<>(albums);
         albumList.getItems().setAll(currentAlbums);
 
