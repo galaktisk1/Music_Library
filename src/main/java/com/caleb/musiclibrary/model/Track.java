@@ -1,9 +1,9 @@
 package com.caleb.musiclibrary.model;
 
 /**
- * Represents a normalized, flat record for indexing and persistence.
+ * Represents one track in the music library.
  */
-public class LibraryRecord {
+public class Track {
     private String title;
     private String artist;
     private String album;

@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.caleb.musiclibrary.index.SearchService;
 import com.caleb.musiclibrary.model.Album;
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 import com.caleb.musiclibrary.scan.LibraryScanner;
 
 /**
@@ -30,23 +30,23 @@ public class LibraryController {
         return scannedAlbums;
     }
 
-    public List<LibraryRecord> searchByTitle(String title) {
+    public List<Track> searchByTitle(String title) {
         return searchService.searchByTitle(title);
     }
 
-    public List<LibraryRecord> searchByArtist(String artist) {
+    public List<Track> searchByArtist(String artist) {
         return searchService.searchByArtist(artist);
     }
 
-    public List<LibraryRecord> searchByAlbum(String album) {
+    public List<Track> searchByAlbum(String album) {
         return searchService.searchByAlbum(album);
     }
 
-    public void addRecords(List<LibraryRecord> records) {
+    public void addRecords(List<Track> records) {
         searchService.addRecords(records);
     }
 
-    public List<LibraryRecord> getAllRecords() {
+    public List<Track> getAllRecords() {
         return searchService.getAllRecords();
     }
 
@@ -96,8 +96,8 @@ public class LibraryController {
 
         String searchText = trackTitle.toLowerCase();
         for (Album album : albums) {
-            List<LibraryRecord> tracks = scanner.scanAlbumTracks(album.getFolderPath());
-            for (LibraryRecord track : tracks) {
+            List<Track> tracks = scanner.scanAlbumTracks(album.getFolderPath());
+            for (Track track : tracks) {
                 String title = track.getTitle();
                 if (title != null && title.toLowerCase().contains(searchText)) {
                     matches.add(album);
@@ -109,7 +109,7 @@ public class LibraryController {
         return matches;
     }
 
-    public List<LibraryRecord> getTracksForAlbum(Album album) {
+    public List<Track> getTracksForAlbum(Album album) {
         if (album == null || album.getFolderPath() == null) {
             return Collections.emptyList();
         }

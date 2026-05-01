@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 class SearchServiceTest {
     @Test
@@ -14,24 +14,24 @@ class SearchServiceTest {
         LibraryIndex index = new LibraryIndex();
         SearchService searchService = new SearchService(index);
 
-        LibraryRecord first = new LibraryRecord();
+        Track first = new Track();
         first.setTitle("Early Grave");
         first.setArtist("Architects");
         first.setAlbum("Hollow Crown");
 
-        LibraryRecord second = new LibraryRecord();
+        Track second = new Track();
         second.setTitle("Dethroned");
         second.setArtist("Architects");
         second.setAlbum("Hollow Crown");
 
-        LibraryRecord third = new LibraryRecord();
+        Track third = new Track();
         third.setTitle("Digital Love");
         third.setArtist("Daft Punk");
         third.setAlbum("Discovery");
 
         searchService.addRecords(List.of(first, second, third));
 
-        List<LibraryRecord> results = searchService.searchByArtist("Architects");
+        List<Track> results = searchService.searchByArtist("Architects");
         System.out.println("SearchServiceTest artist results: " + results.size());
 
         assertEquals(2, results.size());
@@ -50,7 +50,7 @@ class SearchServiceTest {
             record("Digital Love", "Daft Punk", "Discovery")
         ));
 
-        List<LibraryRecord> results = searchService.searchByAlbum("discovery");
+        List<Track> results = searchService.searchByAlbum("discovery");
         System.out.println("SearchServiceTest album result: " + results.get(0).getTitle());
 
         assertEquals(1, results.size());
@@ -77,11 +77,11 @@ class SearchServiceTest {
         assertEquals("Digital Love", searchService.getAllRecords().get(0).getTitle());
     }
 
-    private LibraryRecord record(String title, String artist, String album) {
-        LibraryRecord record = new LibraryRecord();
-        record.setTitle(title);
-        record.setArtist(artist);
-        record.setAlbum(album);
-        return record;
+    private Track record(String title, String artist, String album) {
+        Track track = new Track();
+        track.setTitle(title);
+        track.setArtist(artist);
+        track.setAlbum(album);
+        return track;
     }
 }

@@ -3,21 +3,21 @@ package com.caleb.musiclibrary.index;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 /**
  * Stores library records in memory and supports simple search methods.
  */
 public class LibraryIndex {
-    private final List<LibraryRecord> records = new ArrayList<>();
+    private final List<Track> records = new ArrayList<>();
 
-    public void addRecord(LibraryRecord record) {
+    public void addRecord(Track record) {
         if (record != null) {
             records.add(record);
         }
     }
 
-    public void addRecords(List<LibraryRecord> records) {
+    public void addRecords(List<Track> records) {
         if (records == null) {
             return;
         }
@@ -25,7 +25,7 @@ public class LibraryIndex {
         this.records.addAll(records);
     }
 
-    public List<LibraryRecord> getAllRecords() {
+    public List<Track> getAllRecords() {
         return records;
     }
 
@@ -33,14 +33,14 @@ public class LibraryIndex {
         records.clear();
     }
 
-    public List<LibraryRecord> findByTitle(String title) {
-        List<LibraryRecord> matches = new ArrayList<>();
+    public List<Track> findByTitle(String title) {
+        List<Track> matches = new ArrayList<>();
         if (title == null || title.isBlank()) {
             return matches;
         }
 
         String searchText = title.toLowerCase();
-        for (LibraryRecord record : records) {
+        for (Track record : records) {
             String recordTitle = record.getTitle();
             if (recordTitle != null && recordTitle.toLowerCase().contains(searchText)) {
                 matches.add(record);
@@ -50,14 +50,14 @@ public class LibraryIndex {
         return matches;
     }
 
-    public List<LibraryRecord> findByArtist(String artist) {
-        List<LibraryRecord> matches = new ArrayList<>();
+    public List<Track> findByArtist(String artist) {
+        List<Track> matches = new ArrayList<>();
         if (artist == null || artist.isBlank()) {
             return matches;
         }
 
         String searchText = artist.toLowerCase();
-        for (LibraryRecord record : records) {
+        for (Track record : records) {
             String recordArtist = record.getArtist();
             if (recordArtist != null && recordArtist.toLowerCase().contains(searchText)) {
                 matches.add(record);
@@ -67,14 +67,14 @@ public class LibraryIndex {
         return matches;
     }
 
-    public List<LibraryRecord> findByAlbum(String album) {
-        List<LibraryRecord> matches = new ArrayList<>();
+    public List<Track> findByAlbum(String album) {
+        List<Track> matches = new ArrayList<>();
         if (album == null || album.isBlank()) {
             return matches;
         }
 
         String searchText = album.toLowerCase();
-        for (LibraryRecord record : records) {
+        for (Track record : records) {
             String recordAlbum = record.getAlbum();
             if (recordAlbum != null && recordAlbum.toLowerCase().contains(searchText)) {
                 matches.add(record);

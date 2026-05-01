@@ -12,29 +12,29 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
 
 import com.caleb.musiclibrary.model.Album;
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 /**
- * Extracts audio file tags and converts them into normalized library records.
+ * Extracts audio file tags and converts them into tracks and albums.
  */
 public class MetadataCollector {
     private static final Pattern FIRST_NUMBER = Pattern.compile("\\d+");
     private static final Pattern YEAR_PREFIX = Pattern.compile("^\\d{4}\\s+(.+)$");
     private static final Pattern DISC_LABEL = Pattern.compile("(?i)^disc\\s+(\\d+)(?:\\s+(.*))?$");
 
-    public LibraryRecord collect(Path file) throws Exception {
+    public Track collect(Path file) throws Exception {
         // I looked up how to use jaudiotagger to read MP3 tag data.
         AudioFile audio = AudioFileIO.read(file.toFile());
         Tag tag = audio.getTag();
 
-        LibraryRecord record = new LibraryRecord();
-        record.setFilePath(file.toString());
-        record.setTitle(read(tag, FieldKey.TITLE, stripExtension(file.getFileName().toString())));
-        record.setArtist(read(tag, FieldKey.ARTIST, "Unknown Artist"));
-        record.setAlbum(read(tag, FieldKey.ALBUM, "Unknown Album"));
-        record.setYear(parseInt(read(tag, FieldKey.YEAR, "")));
-        record.setTrackNumber(parseInt(read(tag, FieldKey.TRACK, "")));
-        return record;
+        Track track = new Track();
+        track.setFilePath(file.toString());
+        track.setTitle(read(tag, FieldKey.TITLE, stripExtension(file.getFileName().toString())));
+        track.setArtist(read(tag, FieldKey.ARTIST, "Unknown Artist"));
+        track.setAlbum(read(tag, FieldKey.ALBUM, "Unknown Album"));
+        track.setYear(parseInt(read(tag, FieldKey.YEAR, "")));
+        track.setTrackNumber(parseInt(read(tag, FieldKey.TRACK, "")));
+        return track;
     }
 
     public Album collectAlbum(Path albumFolder, List<Path> albumFiles) throws Exception {

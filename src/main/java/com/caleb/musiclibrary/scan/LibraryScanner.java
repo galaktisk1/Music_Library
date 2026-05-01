@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.caleb.musiclibrary.metadata.MetadataCollector;
 import com.caleb.musiclibrary.model.Album;
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 /**
  * Runs library scanning by combining file discovery and metadata collection.
@@ -52,24 +52,24 @@ public class LibraryScanner {
         return albums;
     }
 
-    public List<LibraryRecord> scanAlbumTracks(Path albumFolder) {
-        List<LibraryRecord> records = new ArrayList<>();
+    public List<Track> scanAlbumTracks(Path albumFolder) {
+        List<Track> tracks = new ArrayList<>();
         List<Path> audioFiles = fileWalker.findAudioFiles(albumFolder);
 
         for (Path audioFile : audioFiles) {
             try {
-                LibraryRecord record = metadataCollector.collect(audioFile);
-                records.add(record);
+                Track track = metadataCollector.collect(audioFile);
+                tracks.add(track);
             } catch (Exception e) {
                 // skip files that fail metadata reading for now
             }
         }
 
-        records.sort(Comparator
-            .comparing((LibraryRecord record) -> record.getTrackNumber() == null ? Integer.MAX_VALUE : record.getTrackNumber())
-            .thenComparing(record -> lower(record.getTitle())));
+        tracks.sort(Comparator
+            .comparing((Track track) -> track.getTrackNumber() == null ? Integer.MAX_VALUE : track.getTrackNumber())
+            .thenComparing(track -> lower(track.getTitle())));
 
-        return records;
+        return tracks;
     }
 
     private String lower(String value) {

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import com.caleb.musiclibrary.index.LibraryIndex;
 import com.caleb.musiclibrary.index.SearchService;
 import com.caleb.musiclibrary.model.Album;
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 import com.caleb.musiclibrary.scan.LibraryScanner;
 
 class LibraryControllerTest {
@@ -70,7 +70,7 @@ class LibraryControllerTest {
 
         LibraryController controller = new LibraryController(scanner, new SearchService(new LibraryIndex()));
 
-        List<LibraryRecord> results = controller.getTracksForAlbum(album);
+        List<Track> results = controller.getTracksForAlbum(album);
         System.out.println("LibraryControllerTest track count for album: " + results.size());
 
         assertEquals(1, results.size());
@@ -86,16 +86,16 @@ class LibraryControllerTest {
         return album;
     }
 
-    private LibraryRecord track(String title, Integer trackNumber) {
-        LibraryRecord record = new LibraryRecord();
-        record.setTitle(title);
-        record.setTrackNumber(trackNumber);
-        return record;
+    private Track track(String title, Integer trackNumber) {
+        Track track = new Track();
+        track.setTitle(title);
+        track.setTrackNumber(trackNumber);
+        return track;
     }
 
     private static class FakeLibraryScanner extends LibraryScanner {
         private List<Album> albumsToReturn = Collections.emptyList();
-        private final Map<Path, List<LibraryRecord>> trackMap = new HashMap<>();
+        private final Map<Path, List<Track>> trackMap = new HashMap<>();
 
         @Override
         public List<Album> scanAlbums(Path rootFolder) {
@@ -103,7 +103,7 @@ class LibraryControllerTest {
         }
 
         @Override
-        public List<LibraryRecord> scanAlbumTracks(Path albumFolder) {
+        public List<Track> scanAlbumTracks(Path albumFolder) {
             return trackMap.getOrDefault(albumFolder, Collections.emptyList());
         }
     }

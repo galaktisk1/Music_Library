@@ -3,7 +3,7 @@ package com.caleb.musiclibrary.index;
 import java.util.Collections;
 import java.util.List;
 
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 /**
  * Provides user-facing search operations over the indexed music library.
@@ -15,29 +15,29 @@ public class SearchService {
         this.index = index;
     }
 
-    public void addRecords(List<LibraryRecord> records) {
+    public void addRecords(List<Track> records) {
         index.addRecords(records);
     }
 
-    public void replaceRecords(List<LibraryRecord> records) {
+    public void replaceRecords(List<Track> records) {
         index.clear();
         index.addRecords(records);
     }
 
-    public List<LibraryRecord> searchByTitle(String title) {
+    public List<Track> searchByTitle(String title) {
         return index.findByTitle(title);
     }
 
-    public List<LibraryRecord> searchByArtist(String artist) {
+    public List<Track> searchByArtist(String artist) {
         return index.findByArtist(artist);
     }
 
-    public List<LibraryRecord> searchByAlbum(String album) {
+    public List<Track> searchByAlbum(String album) {
         return index.findByAlbum(album);
     }
 
-    public List<LibraryRecord> getAllRecords() {
-        List<LibraryRecord> records = index.getAllRecords();
+    public List<Track> getAllRecords() {
+        List<Track> records = index.getAllRecords();
         if (records == null) {
             return Collections.emptyList();
         }

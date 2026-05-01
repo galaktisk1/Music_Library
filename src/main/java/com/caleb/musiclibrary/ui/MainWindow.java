@@ -11,7 +11,7 @@ import java.util.List;
 
 import com.caleb.musiclibrary.controller.LibraryController;
 import com.caleb.musiclibrary.model.Album;
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,7 +51,7 @@ public class MainWindow {
     private final StackPane coverPane = new StackPane();
 
     private List<Album> currentAlbums = new ArrayList<>();
-    private List<LibraryRecord> currentTracks = new ArrayList<>();
+    private List<Track> currentTracks = new ArrayList<>();
     private String activeTrackSearch = null;
 
     public MainWindow(LibraryController controller, Stage stage) {
@@ -205,7 +205,7 @@ public class MainWindow {
     }
 
     private void openAlbum(Album album) {
-        List<LibraryRecord> tracks = controller.getTracksForAlbum(album);
+        List<Track> tracks = controller.getTracksForAlbum(album);
         currentTracks = tracks;
 
         albumTitleLabel.setText(safe(album.getTitle()));
@@ -213,7 +213,7 @@ public class MainWindow {
         showCoverArt(album.getCoverArt());
 
         trackList.getItems().clear();
-        for (LibraryRecord track : tracks) {
+        for (Track track : tracks) {
             String line = "";
             if (track.getTrackNumber() != null) {
                 line += track.getTrackNumber() + ". ";
@@ -229,7 +229,7 @@ public class MainWindow {
         }
     }
 
-    private void openTrackInMediaPlayer(LibraryRecord track) {
+    private void openTrackInMediaPlayer(Track track) {
         if (track == null || track.getFilePath() == null || track.getFilePath().isBlank()) {
             return;
         }
@@ -252,7 +252,7 @@ public class MainWindow {
             return;
         }
 
-        List<LibraryRecord> tracks = controller.getTracksForAlbum(album);
+        List<Track> tracks = controller.getTracksForAlbum(album);
         if (tracks.isEmpty()) {
             return;
         }
@@ -261,7 +261,7 @@ public class MainWindow {
             List<String> playlistLines = new ArrayList<>();
             playlistLines.add("#EXTM3U");
 
-            for (LibraryRecord track : tracks) {
+            for (Track track : tracks) {
                 if (track.getFilePath() != null && !track.getFilePath().isBlank()) {
                     playlistLines.add(track.getFilePath());
                 }

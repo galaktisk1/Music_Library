@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 public class MetadataCollectorTest {
 
@@ -18,7 +18,7 @@ public class MetadataCollectorTest {
 
         assertTrue(file.toFile().exists(), "Test mp3 file was not found: " + file);
 
-        LibraryRecord record = collector.collect(file);
+        Track record = collector.collect(file);
 
         System.out.println("MetadataCollector saw:");
         System.out.println("File Path: " + record.getFilePath());

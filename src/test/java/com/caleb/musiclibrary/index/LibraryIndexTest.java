@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 class LibraryIndexTest {
 
@@ -20,7 +20,7 @@ class LibraryIndexTest {
             record("Digital Love", "Daft Punk", "Discovery")
         ));
 
-        List<LibraryRecord> results = index.findByTitle("grave");
+        List<Track> results = index.findByTitle("grave");
         System.out.println("LibraryIndexTest title matches: " + results.size());
 
         assertEquals(2, results.size());
@@ -33,7 +33,7 @@ class LibraryIndexTest {
         LibraryIndex index = new LibraryIndex();
         index.addRecord(record("Early Grave", "Architects", "Hollow Crown"));
 
-        List<LibraryRecord> results = index.findByArtist("   ");
+        List<Track> results = index.findByArtist("   ");
         System.out.println("LibraryIndexTest blank artist search returned: " + results.size());
 
         assertTrue(results.isEmpty());
@@ -53,11 +53,11 @@ class LibraryIndexTest {
         assertTrue(index.getAllRecords().isEmpty());
     }
 
-    private LibraryRecord record(String title, String artist, String album) {
-        LibraryRecord record = new LibraryRecord();
-        record.setTitle(title);
-        record.setArtist(artist);
-        record.setAlbum(album);
-        return record;
+    private Track record(String title, String artist, String album) {
+        Track track = new Track();
+        track.setTitle(title);
+        track.setArtist(artist);
+        track.setAlbum(album);
+        return track;
     }
 }

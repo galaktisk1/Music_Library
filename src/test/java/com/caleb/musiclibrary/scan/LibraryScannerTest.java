@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import com.caleb.musiclibrary.metadata.MetadataCollector;
 import com.caleb.musiclibrary.model.Album;
-import com.caleb.musiclibrary.model.LibraryRecord;
+import com.caleb.musiclibrary.model.Track;
 
 class LibraryScannerTest {
 
@@ -58,7 +58,7 @@ class LibraryScannerTest {
 
         LibraryScanner scanner = new LibraryScanner(walker, collector);
 
-        List<LibraryRecord> results = scanner.scanAlbumTracks(albumFolder);
+        List<Track> results = scanner.scanAlbumTracks(albumFolder);
         System.out.println("LibraryScannerTest first sorted track: " + results.get(0).getTitle());
 
         assertEquals(3, results.size());
@@ -76,11 +76,11 @@ class LibraryScannerTest {
         return album;
     }
 
-    private LibraryRecord track(String title, Integer trackNumber) {
-        LibraryRecord record = new LibraryRecord();
-        record.setTitle(title);
-        record.setTrackNumber(trackNumber);
-        return record;
+    private Track track(String title, Integer trackNumber) {
+        Track track = new Track();
+        track.setTitle(title);
+        track.setTrackNumber(trackNumber);
+        return track;
     }
 
     private static class FakeFileWalker extends FileWalker {
@@ -100,7 +100,7 @@ class LibraryScannerTest {
 
     private static class FakeMetadataCollector extends MetadataCollector {
         private final Map<Path, Album> albumMap = new HashMap<>();
-        private final Map<Path, LibraryRecord> trackMap = new HashMap<>();
+        private final Map<Path, Track> trackMap = new HashMap<>();
 
         @Override
         public Album collectAlbum(Path albumFolder, List<Path> albumFiles) {
@@ -108,7 +108,7 @@ class LibraryScannerTest {
         }
 
         @Override
-        public LibraryRecord collect(Path file) {
+        public Track collect(Path file) {
             return trackMap.get(file);
         }
     }
